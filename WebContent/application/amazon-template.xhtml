@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible"
+		content="text/html; charset=UTF-8 IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<!-- Bootstrap Core CSS -->
+	<h:outputStylesheet name="bootstrap.min.css" library="css" />
+
+	<!-- Custom CSS -->
+	<h:outputStylesheet name="sb-admin.css" library="css" />
+
+	<!-- Morris Charts CSS -->
+	<h:outputStylesheet name="morris.css" library="css" />
+
+	<!-- Custom Fonts -->
+	<link href="resources/font-awesome/css/font-awesome.min.css"
+		rel="stylesheet" type="text/css" />
+</h:head>
+
+<h:body>
+	<div id="wrapper">
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-ex1-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="../index2.xhtml">AmazonFetcher</a>
+			</div>
+
+			<!-- Top Menu Items -->
+			<ul class="nav navbar-right top-nav">
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown"><i class="fa fa-envelope"></i> <b
+						class="caret"></b></a>
+					<ul class="dropdown-menu message-dropdown">
+						<li class="message-preview"><a href="#">
+								<div class="media">
+									<span class="pull-left"> <a
+										href="https://mail.google.com/mail/u/1/#inbox"> <h:graphicImage
+												class="media-object" src="http://placehold.it/50x50" alt="" /></a>
+									</span>
+								</div>
+						</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown"><i class="fa fa-bell"></i> <b
+						class="caret"></b></a>
+					<ul class="dropdown-menu alert-dropdown">
+						<li><a href="#">Alert Name <span
+								class="label label-default">Alert Badge</span></a></li>
+						<li><a href="#">Alert Name <span
+								class="label label-primary">Alert Badge</span></a></li>
+						<li><a href="#">Alert Name <span
+								class="label label-success">Alert Badge</span></a></li>
+						<li><a href="#">Alert Name <span class="label label-info">Alert
+									Badge</span></a></li>
+						<li><a href="#">Alert Name <span
+								class="label label-warning">Alert Badge</span></a></li>
+						<li><a href="#">Alert Name <span
+								class="label label-danger">Alert Badge</span></a></li>
+						<li class="divider"></li>
+						<li><a href="#">View All</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b
+						class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+						</li>
+						<li><a href="#"><i class="fa fa-fw fa-envelope"></i>
+								Inbox</a></li>
+						<li><a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+						</li>
+						<li class="divider"></li>
+						<li><a href="#"><i class="fa fa-fw fa-power-off"></i> Log
+								Out</a></li>
+					</ul></li>					
+			</ul>
+			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav side-nav">
+					<li class="active"><a href="index2.xhtml"><i
+							class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
+					<li><a href="charts.html"><i
+							class="fa fa-fw fa-bar-chart-o"></i> Charts</a></li>
+					<li><a href="tables.xhtml"><i class="fa fa-fw fa-table"></i>
+							Tables</a></li>
+					<li><a href="forms.html"><i class="fa fa-fw fa-edit"></i>
+							Forms</a></li>
+					<li><a href="bootstrap-elements.html"><i
+							class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a></li>
+					<li><a href="bootstrap-grid.html"><i
+							class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a></li>
+					<li><a href="javascript:;" data-toggle="collapse"
+						data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i>
+							Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+						<ul id="demo" class="collapse">
+							<li><a href="#">Dropdown Item</a></li>
+							<li><a href="#">Dropdown Item</a></li>
+						</ul></li>
+					<li><a href="blank-page.html"><i class="fa fa-fw fa-file"></i>
+							Blank Page</a></li>
+					<li><a href="index-rtl.html"><i
+							class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a></li>
+				</ul>						
+			</div>
+			<!-- /.navbar-collapse -->
+		</nav>
+		<div id="page-wrapper">
+
+			<div class="container-fluid">
+				<div id="content">
+					<!-- ここにメインコンテンツが挿入されます -->
+					<ui:insert name="content">
+					</ui:insert>
+				</div>
+				
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /#page-wrapper -->
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- jQuery -->
+	<h:outputScript library="js" name="jquery.js" />
+
+	<!-- Bootstrap Core JavaScript -->
+	<h:outputScript library="js" name="bootstrap.min.js" />
+
+	<!-- <h:outputScript name="main/js/showcase.js" /> -->
+
+	<!-- jsf -->
+	<!-- <h:outputScript library="javax.faces" name="jsf.js" target="head" /> -->
+
+	<!-- <h:outputScript name="main/js/perfect-scrollbar.js" /> -->
+
+	<!-- Morris Charts JavaScript -->
+	<!-- <h:outputScript library="js" name="raphael.min.js" />
+	<h:outputScript library="js" name="morris.min.js" />
+	<h:outputScript library="js" name="morris-data.js" /> -->
+	
+</h:body>
+
+</html>

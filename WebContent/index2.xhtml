@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible"
+		content="text/html; charset=UTF-8 IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>AmazonFetcher</title>
+
+</h:head>
+
+<h:body>
+	<ui:composition template="application/amazon-template.xhtml">
+		<ui:define name="content">
+			<!-- Page Heading -->
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">
+						SearchProduct <small>Main page</small>
+					</h1>
+					<ol class="breadcrumb">
+						<li class="active"><i class="fa fa-dashboard"></i> Dashboard
+						</li>
+					</ol>
+				</div>
+			</div>
+			<!-- /.row -->
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="alert alert-info alert-dismissable">
+						<a href="YConnectServlet"> <h:graphicImage
+								value="http://i.yimg.jp/images/login/btn/btnXSYid.gif"
+								width="241" height="28" alt="Yahoo! JAPAN IDでログイン" border="0" /></a>
+						<span class="yconnectLogin"> <h:graphicImage
+								src="https://s.yimg.jp/images/login/btn/btn_login_a_392.png"
+								width="196" height="38" alt="Yahoo! JAPAN IDでログイン" border="0" />
+						</span>
+						<script type="text/javascript">
+							window.yconnectInit = function() {
+								YAHOO.JP.yconnect.Authorization
+										.init({
+											button : {
+												format : "image",
+												type : "a",
+												width : 260,
+												height : 50,
+												className : "yconnectLogin"
+											},
+											authorization : {
+												clientId : "dj0zaiZpPUp5bEczNWNNUXA5eSZzPWNvbnN1bWVyc2VjcmV0Jng9YzE-",
+												redirectUri : "http://localhost:8080/AmazonFetcher/YConnectServlet",
+												scope : "openid email address",
+												state : "5Ye65oi744KKT0vjgafjgZnjgojjgIHlhYjovKnjg4M",
+												nonce : "SUTljqjjga8uLi7jgrrjg4Plj4vjgaDjgoc"
+											},
+											onError : function(res) {
+												// エラー発生時のコールバック関数
+												console
+														.log("error: "
+																+ res.Error.errorDescription);
+											},
+											onCancel : function(res) {
+												// 同意キャンセルされた時のコールバック関数
+												console.log("state: "
+														+ res.Error.state);
+											}
+										});
+							};
+							(function() {
+								var fs = document
+										.getElementsByTagName("script")[0], s = document
+										.createElement("script");
+								s
+										.setAttribute("src",
+												"https://s.yimg.jp/images/login/yconnect/auth/1.0.3/auth-min.js");
+								fs.parentNode.insertBefore(s, fs);
+							})();
+						</script>
+					</div>
+				</div>
+			</div>
+			<!-- /.row -->
+
+			<div class="row">
+				<div class="col-lg-12">
+					<h:form>
+						<p:commandButton type="submit"
+							action="#{searchController.getInventoryInfo}"
+							value="#{i18n['button.getInfo']}">
+						</p:commandButton>
+					</h:form>
+				</div>
+				<div class="alert alert-info alert-dismissable">
+					<div class="col-lg-2">
+						<h:form>
+							<p:commandButton type="submit"
+								action="#{searchController.getSellingProducts}"
+								value="#{i18n['button.getAllProduct']}">
+							</p:commandButton>
+						</h:form>
+					</div>
+					<div class="col-lg-2">
+						<h:form>
+							<p:commandButton type="submit"
+								action="#{searchController.getSellingPrdNoUpdate}"
+								value="#{i18n['button.getAllProductNoUp']}">
+							</p:commandButton>
+						</h:form>
+					</div>
+				</div>
+			</div>
+			<!-- /.row -->
+
+			<div class="row">
+				<div class="col-lg-4">
+					<h:form>
+						<p:inputText id="asin" value="#{searchController.asin}"
+							placeholder="asinコードを入力して。" />
+						<p:commandButton type="submit"
+							action="#{searchController.productSearch}"
+							value="#{i18n['button.search']}">
+							<f:ajax render="product" execute="@form" />
+						</p:commandButton>
+					</h:form>
+				</div>
+			</div>
+			<!-- /.row -->
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<i class="fa fa-bar-chart-o fa-fw"></i> Amazon Product
+								Information
+							</h3>
+						</div>
+
+						<div class="panel-body">
+							<div class="col-lg-12">
+								<h2>Search Result</h2>
+								<div class="table-responsive">
+									<p:dataTable id="product" var="product"
+										class="table table-bordered table-hover table-striped"
+										value="#{searchController.products}">
+										
+										<p:column headerText="Asin">
+											<h:form>
+												<p:commandLink id="detail"
+													action="#{searchController.goProductDetail}" ajax="false">
+													<h:outputText value="#{product.asin}" />
+												</p:commandLink>
+											</h:form>
+										</p:column>
+
+										<p:column headerText="EAN">
+											<h:outputText value="#{product.ean}" />
+										</p:column>
+
+
+										<p:column headerText="Title">
+											<a href="#{product.productUrl}"><h:outputText
+													value="#{product.title}" /></a>
+										</p:column>
+
+										<p:column headerText="Amount">
+											<p:dataList value="#{product.priceTransitions}"
+												var="priceTransition" type="ordered">
+												<h:outputText value="#{priceTransition.productPrice}円" />
+											</p:dataList>
+										</p:column>
+
+										<p:column headerText="Weight">
+											<h:outputText value="#{product.productWeight}kg" />
+										</p:column>
+
+										<p:column headerText="Availability">
+											<p:dataList value="#{product.priceTransitions}"
+												var="priceTransition" type="ordered">
+												<h:outputText value="#{priceTransition.availability}" />
+											</p:dataList>
+										</p:column>
+										<p:column headerText="Regist">
+											<h:form>
+												<p:commandButton type="submit"
+													action="#{productRegisterationController.registProduct}"
+													value="#{i18n['button.regist']}">
+												</p:commandButton>
+											</h:form>
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.row -->
+
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-comments fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">26</div>
+									<div>New Comments!</div>
+								</div>
+							</div>
+						</div>
+						<a href="#">
+							<div class="panel-footer">
+								<span class="pull-left">View Details</span> <span
+									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="panel panel-green">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-tasks fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">12</div>
+									<div>New Tasks!</div>
+								</div>
+							</div>
+						</div>
+						<a href="#">
+							<div class="panel-footer">
+								<span class="pull-left">View Details</span> <span
+									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="panel panel-yellow">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-shopping-cart fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">124</div>
+									<div>New Orders!</div>
+								</div>
+							</div>
+						</div>
+						<a href="#">
+							<div class="panel-footer">
+								<span class="pull-left">View Details</span> <span
+									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="panel panel-red">
+						<div class="panel-heading">
+							<div class="row">
+								<div class="col-xs-3">
+									<i class="fa fa-support fa-5x"></i>
+								</div>
+								<div class="col-xs-9 text-right">
+									<div class="huge">13</div>
+									<div>Support Tickets!</div>
+								</div>
+							</div>
+						</div>
+						<a href="#">
+							<div class="panel-footer">
+								<span class="pull-left">View Details</span> <span
+									class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+								<div class="clearfix"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- /.row -->
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
